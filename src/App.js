@@ -1,26 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Navigation from "./components/Navigation";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import routes from "./routes";
+import { useStyles } from "./styles";
 
-function App() {
+const App = () => {
+  const classes = useStyles();
   return (
-    <div style={{
-      display:'flex',
-      flexDirection:'column',
-      justifyContent:'center',
-      alignItems:'center',
-      height:'100vh',
-      fontFamily:'roboto'
-    }
-    }>
-      <h1 style={{
-        color:'#6EC177',
-        margin:0
-      }}>
-        Hey Come soon
-      </h1>
-      <p>Whats up coming soon</p>
+    <div className={classes.appRoot}>
+      <Router>
+        <Navigation />
+        <div>
+          <div className={classes.appBarSpacer}></div>
+          <Switch>
+            {routes.map((route, index) => {
+              return (
+                <Route exact key={index} path={route.path}>
+                  {route.component}
+                </Route>
+              );
+            })}
+          </Switch>
+        </div>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
